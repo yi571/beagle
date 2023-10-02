@@ -11,7 +11,7 @@ fn main() {
 
     match command_line_args.action {
         cli::Action::Init { path } => init::init(path),
-        cli::Action::Sniff { message, path } => sniff::record(message, path),
+        cli::Action::Sniff { message, path } => sniff::sniff(message, path),
         
     }
 

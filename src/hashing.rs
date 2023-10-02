@@ -35,7 +35,7 @@ pub fn save_csv(csv_path: PathBuf, data: Vec<CsvData>) {
         .expect("write head error");
 
     for i in data {
-        wtr.write_record(&[i.path, i.hash])
+        wtr.write_record(&[i.path, i.hash, i.last_modified])
             .expect("write data error");
     }
 

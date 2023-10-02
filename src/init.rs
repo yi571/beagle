@@ -33,7 +33,7 @@ fn check_init_folder_exist(path: &PathBuf) {
                 let write_txn = db.begin_write().unwrap();
                 {
                     let mut table = write_txn.open_table(TABLE).unwrap();
-                    table.insert("last_modified", n.as_secs()).unwrap();
+                    table.insert("last_record", n.as_secs()).unwrap();
                 }
                 write_txn.commit().unwrap();
 
