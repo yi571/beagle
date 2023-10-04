@@ -1,7 +1,7 @@
 use std::{env, fs, path::PathBuf, time::SystemTime};
 
 use indicatif::{ProgressBar, ProgressStyle};
-use redb::{Database, Error, ReadableTable, TableDefinition};
+use redb::{Database, ReadableTable, TableDefinition};
 use time::{Duration, OffsetDateTime};
 use walkdir::{WalkDir, DirEntry};
 
@@ -10,7 +10,7 @@ use crate::hashing::{self, CsvData, save_csv};
 const TABLE: TableDefinition<&str, u64> = TableDefinition::new("last_modified");
 
 pub fn sniff(msg: String, path: Option<PathBuf>) {
-    println!("Beagle🐶開始嗅探：");
+    println!("Beagle🐶start sniff：");
 
     let path: PathBuf = match path {
         Some(p) => p,
@@ -29,7 +29,7 @@ pub fn sniff(msg: String, path: Option<PathBuf>) {
         let table = read_txn.open_table(TABLE).unwrap();
 
         let last_record = table.get("last_record").unwrap().unwrap().value();
-        println!("last_record: {:?}", last_record);
+        // println!("last_record: {:?}", last_record);
 
         let spinner_style = ProgressStyle::with_template("{prefix:.bold.dim} {spinner} {wide_msg}")
             .unwrap()

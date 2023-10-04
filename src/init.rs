@@ -1,8 +1,8 @@
 use std::{env, fs, path::PathBuf, time::SystemTime};
 
-use crate::hashing::{self, save_csv, CsvData};
+use crate::hashing::{save_csv, CsvData};
 
-use redb::{Database, Error, ReadableTable, TableDefinition};
+use redb::{Database, TableDefinition};
 
 const TABLE: TableDefinition<&str, u64> = TableDefinition::new("last_modified");
 

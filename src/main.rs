@@ -4,6 +4,7 @@ mod cli;
 use cli::CommandLineArgs;
 mod init;
 mod sniff;
+mod list;
 extern crate time;
 pub mod hashing;
 fn main() {
@@ -12,7 +13,7 @@ fn main() {
     match command_line_args.action {
         cli::Action::Init { path } => init::init(path),
         cli::Action::Sniff { message, path } => sniff::sniff(message, path),
-        
+        cli::Action::List { path } => list::get_csv_list(path),
     }
 
 }
