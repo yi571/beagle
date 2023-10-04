@@ -27,6 +27,20 @@ pub enum Action {
         #[structopt(short, long, parse(from_os_str))]
         path: Option<PathBuf>,
     },
+    /// generate record
+    Generate {
+        /// folder path
+        #[structopt(short, long, parse(from_os_str))]
+        path: Option<PathBuf>,
+
+        /// item
+        #[structopt(short, long)]
+        item: String,
+
+        /// export folder path
+        #[structopt(short, long, parse(from_os_str))]
+        export_path: Option<PathBuf>,
+    }
 }
 
 #[derive(Debug, StructOpt)]
