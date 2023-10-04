@@ -1,0 +1,45 @@
+name: 'release'
+
+on: workflow_dispatch
+
+
+jobs:
+  release:
+    name: release ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-pc-windows-gnu
+            archive: zip
+    steps:
+      - uses: actions/checkout@master
+      - name: Check Release Version
+        uses: thebongy/version-check@v1
+        with:
+          file: Cargo.toml
+          tagFormat: ${version}
+        id: version_check_staging
+      - name: Compile
+        id: compile
+        uses: rust-build/rust-build.action@v1.4.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          RUSTTARGET: ${{ matrix.target }}
+          UPLOAD_MODE: none
+          ARCHIVE_NAME: beagle_${{ matrix.target }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Binary
+          path: |
+            ${{ steps.compile.outputs.BUILT_ARCHIVE }}
+            ${{ steps.compile.outputs.BUILT_CHECKSUM }}
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ steps.compile.outputs.BUILT_ARCHIVE }}
+          tag: ${{ steps.version_check_staging.outputs.releaseVersion }}
